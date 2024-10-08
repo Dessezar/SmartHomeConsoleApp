@@ -9,7 +9,7 @@ namespace Shared.Handlers;
 public class DeviceClienHandler
 {
     private readonly DeviceSettings _settings = new();
-    private DeviceClient? _client;
+    public DeviceClient? _client {  get; private set; }
     public DeviceClienHandler(string deviceId, string deviceType, string deviceName)
     {
         _settings!.DeviceId = deviceId;
@@ -20,23 +20,30 @@ public class DeviceClienHandler
     public void Initialize()
     {
         _client = DeviceClient.CreateFromConnectionString(_settings.ConnectionString);
+        _client.SetMethodDefaultHandlerAsync(DirectMethodDefaultCallback, null);
     }
 
     public Task<MethodResponse> DirectMethodDefaultCallback(MethodRequest request, object useContext)
     {
-        string method = request.Name.ToLower();
-
-        switch (request.Name.ToLower())
+        var methodResponse = request.Name.ToLower() switch
         {
-            case "start":
-                return Task.FromResult( OnStart());
+            "start" => OnStart(),
+            "stop" => OnStop(),
+            _ => GenerateMethodResponse("No suitble method found", 404),
+        };
 
-            case "stop":
-                return OnStop();
+        return Task.FromResult(methodResponse);
 
-            default:
-                break;
-        }
+        //string method = request.Name.ToLower();
+        //switch (request.Name.ToLower())
+        //{
+        //    case "start":
+        //        return Task.FromResult(OnStart());
+        //    case "stop":
+        //        return OnStop();
+        //    default:
+        //        break;
+        //}
     }
 
     public MethodResponse OnStart()
