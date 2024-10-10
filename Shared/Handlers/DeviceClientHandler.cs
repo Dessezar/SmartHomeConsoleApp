@@ -18,7 +18,7 @@ public class DeviceClientHandler
         Settings.DeviceName = deviceName;
         Settings.ConnectionString = "HostName=systemutvecklingIotHub.azure-devices.net;DeviceId=86f55ef4-bb5c-4b9f-9fe2-b4ad27599b5d;SharedAccessKey=XiE8GjOXmNV2xTzSlggs4QhEaDD+mzlgrgIO6C8D1Rs=";
     }
-    
+
     public ResultResponse Initialize()
     {
         var response = new ResultResponse();
@@ -156,7 +156,7 @@ public class DeviceClientHandler
         }
         else if (status == ConnectionStatus.Connected)
         {
-            Task.Run(()=> UpdateDeviceTwinConnectionStateAsync(true));
+            Task.Run(() => UpdateDeviceTwinConnectionStateAsync(true));
         }
     }
 
@@ -195,19 +195,21 @@ public class DeviceClientHandler
     {
         var response = new ResultResponse();
 
+
         try
         {
             Settings.DeviceState = false;
-            Task.WhenAll(UpdateDeviceTwinDeviceStateAsync(),
-            UpdateDeviceTwinConnectionStateAsync(false));
+            Task.Run(UpdateDeviceTwinDeviceStateAsync);
+            UpdateDeviceTwinConnectionStateAsync(false).Wait();
             response.Succeeded = true;
             response.Message = "Device disconnected.";
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             response.Succeeded = false;
             response.Message = ex.Message;
         }
+
 
         return response;
     }
