@@ -27,8 +27,11 @@ public class DeviceClientHandler
             _client = DeviceClient.CreateFromConnectionString(Settings.ConnectionString);
             if (_client != null)
             {
-                Task.WhenAll(_client.SetMethodDefaultHandlerAsync(DirectMethodDefaultCallback, null), UpdateDeviceTwinDevicePropertiesAsync());
-
+                Task.WhenAll(
+                    _client.SetMethodDefaultHandlerAsync(DirectMethodDefaultCallback, null),
+                    _client.SetConnectionStatusChangesHandler(ConnectionStatusChangesHandler),
+                    UpdateDeviceTwinDevicePropertiesAsync());
+                
 
                 response.Succeeded = true;
                 response.Message = "device initalized";
