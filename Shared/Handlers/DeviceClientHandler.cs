@@ -9,25 +9,26 @@ namespace Shared.Handlers;
 
 public class DeviceClientHandler
 {
-    private readonly DeviceSettings _settings = new();
+    public DeviceSettings Settings { get; private set; } = new();
     private DeviceClient? _client;
     public DeviceClientHandler(string deviceId, string deviceType, string deviceName)
     {
-        _settings!.DeviceId = deviceId;
-        _settings.DeviceType = deviceType;
-        _settings.DeviceName = deviceName;
+        Settings!.DeviceId = deviceId;
+        Settings.DeviceType = deviceType;
+        Settings.DeviceName = deviceName;
+        Settings.ConnectionString = "HostName=systemutvecklingIotHub.azure-devices.net;DeviceId=86f55ef4-bb5c-4b9f-9fe2-b4ad27599b5d;SharedAccessKey=XiE8GjOXmNV2xTzSlggs4QhEaDD+mzlgrgIO6C8D1Rs=";
     }
 
-    public async Task<ResultResponse> InitializeAsync()
+    public ResultResponse Initialize()
     {
         var response = new ResultResponse();
         try
         {
-            _client = DeviceClient.CreateFromConnectionString(_settings.ConnectionString);
+            _client = DeviceClient.CreateFromConnectionString(Settings.ConnectionString);
             if (_client != null)
             {
-                await _client.SetMethodDefaultHandlerAsync(DirectMethodDefaultCallback, null);
-                await UpdateDeviceTwinDevicePropertiesAsync();
+                Task.WhenAll(_client.SetMethodDefaultHandlerAsync(DirectMethodDefaultCallback, null), UpdateDeviceTwinDevicePropertiesAsync());
+
 
                 response.Succeeded = true;
                 response.Message = "device initalized";
@@ -71,7 +72,7 @@ public class DeviceClientHandler
 
     public async Task<MethodResponse> OnStartAsync()
     {
-        _settings.DeviceState = true;
+        Settings.DeviceState = true;
         var result = await UpdateDeviceTwinDeviceStateAsync();
         if (result.Succeeded)
         {
@@ -85,7 +86,7 @@ public class DeviceClientHandler
 
     public async Task<MethodResponse> OnStopAsync()
     {
-        _settings.DeviceState = false;
+        Settings.DeviceState = false;
 
         var result = await UpdateDeviceTwinDeviceStateAsync();
 
@@ -124,7 +125,7 @@ public class DeviceClientHandler
         {
             var reportedProperties = new TwinCollection
             {
-                ["deviceState"] = _settings.DeviceState,
+                ["deviceState"] = Settings.DeviceState,
             };
 
             if (_client != null)
@@ -153,10 +154,10 @@ public class DeviceClientHandler
         {
             var reportedProperties = new TwinCollection
             {
-                ["connectionState"] = _settings.ConnectionsState,
-                ["deviceName"] = _settings.DeviceName,
-                ["deviceType"] = _settings.DeviceType,
-                ["deviceState"] = _settings.DeviceState,
+                ["connectionState"] = Settings.ConnectionsState,
+                ["deviceName"] = Settings.DeviceName,
+                ["deviceType"] = Settings.DeviceType,
+                ["deviceState"] = Settings.DeviceState,
             };
 
             if (_client != null)
