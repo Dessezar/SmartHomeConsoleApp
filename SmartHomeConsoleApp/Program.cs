@@ -15,9 +15,9 @@ dc.Settings.DeviceStateChanged += (deviceState) =>
     Console.WriteLine($"Device state changed to {deviceState}");
 };
 
-AppDomain.CurrentDomain.ProcessExit += async (s, e) =>
+AppDomain.CurrentDomain.ProcessExit += (s, e) =>
 {
-    var result = await dc.DisconnectAsync();
+    var result = dc.Disconnect();
     Console.WriteLine(result.Message);
 
 };
