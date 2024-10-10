@@ -15,12 +15,12 @@ dc.Settings.DeviceStateChanged += (deviceState) =>
     Console.WriteLine($"Device state changed to {deviceState}");
 };
 
-AppDomain.CreateDomain.ProcessExit += async (s, e) =>
+AppDomain.CurrentDomain.ProcessExit += async (s, e) =>
 {
     var result = await dc.DisconnectAsync();
     Console.WriteLine(result.Message);
 
-}
+};
 
 Console.WriteLine("Press any key to coles application.");
 Console.ReadKey();  
