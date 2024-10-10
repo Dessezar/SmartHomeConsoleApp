@@ -147,6 +147,49 @@ public class DeviceClientHandler
         return response;
     }
 
+    public void ConnectionStatusChangeHandler(ConnectionStatus status, ConnectionStatusChangeReason reason)
+    {
+        if (status == ConnectionStatus.Disconnected || status == ConnectionStatus.Disabled)
+        {
+            Task.Run(() => UpdateDeviceTwinConnectionStateAsync(false));
+        }
+        else if (status == ConnectionStatus.Connected)
+        {
+            Task.Run(()=> UpdateDeviceTwinConnectionStateAsync(true));
+        }
+    }
+
+    public async Task<ResultResponse> UpdateDeviceTwinConnectionStateAsync(bool connectionState)
+    {
+        var response = new ResultResponse();
+        try
+        {
+            var reportedProperties = new TwinCollection
+            {
+                ["connectionState"] = connectionState,
+            };
+
+            if (_client != null)
+            {
+                await _client!.UpdateReportedPropertiesAsync(reportedProperties);
+                response.Succeeded = true;
+                response.Message = $"Device ConnectionState updated to {connectionState}";
+            }
+            else
+            {
+                response.Succeeded = false;
+                response.Message = "No device client was found";
+            }
+        }
+        catch (Exception ex)
+        {
+            response.Succeeded = false;
+            response.Message = ex.Message;
+        }
+        return response;
+    }
+
+
     public async Task<ResultResponse> DisconnectAsync()
     {
         var response = new ResultResponse();
@@ -179,7 +222,7 @@ public class DeviceClientHandler
         {
             var reportedProperties = new TwinCollection
             {
-                ["connectionState"] = Settings.ConnectionsState,
+                ["connectionState"] = true,
                 ["deviceName"] = Settings.DeviceName,
                 ["deviceType"] = Settings.DeviceType,
                 ["deviceState"] = Settings.DeviceState,

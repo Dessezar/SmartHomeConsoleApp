@@ -22,7 +22,7 @@ AppDomain.CurrentDomain.ProcessExit += async (s, e) =>
 
 };
 
-Console.WriteLine("Press any key to coles application.");
+Console.WriteLine("Press any key to close application.");
 Console.ReadKey();  
 
 
