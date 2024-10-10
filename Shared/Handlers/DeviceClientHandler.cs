@@ -147,6 +147,31 @@ public class DeviceClientHandler
         return response;
     }
 
+    public async Task<ResultResponse> DisconnectAsync()
+    {
+        var response = new ResultResponse();
+
+        try
+        {
+            Settings.DeviceState = false;
+            await UpdateDeviceTwinDeviceStateAsync();
+            response.Succeeded = true;
+            response.Message = "Device disconnected.";
+        }
+        catch(Exception ex)
+        {
+            response.Succeeded = false;
+            response.Message = ex.Message;
+        }
+
+        return response;
+    }
+
+
+
+
+
+
     public async Task<ResultResponse> UpdateDeviceTwinDevicePropertiesAsync()
     {
         var response = new ResultResponse();
