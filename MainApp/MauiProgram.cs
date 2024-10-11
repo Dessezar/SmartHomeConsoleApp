@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using MainApp.ViewModels;
+using Microsoft.Extensions.Logging;
 
 namespace MainApp
 {
@@ -20,6 +21,8 @@ namespace MainApp
     		builder.Services.AddBlazorWebViewDeveloperTools();
     		builder.Logging.AddDebug();
 #endif
+
+            builder.Services.AddTransient<HomeViewModel> ();
 
             return builder.Build();
         }

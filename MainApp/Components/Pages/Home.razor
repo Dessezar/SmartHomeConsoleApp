@@ -1,9 +1,12 @@
 ﻿@page "/"
+@using MainApp.ViewModels
 @using Shared.Models
+@inject HomeViewModel viewModel
 
 
 
 <div class="container">
+
     <h3 class="headline">Devices</h3>
 
     <div class="devices">
@@ -11,8 +14,28 @@
         {
             foreach (var device in Devices)
             {
-                <div id="@device.DeviceId" class="device @(device.DeviceState ? "active" : null)">
 
+
+               @*  var icon = device.DeviceType.ToLower() switch
+                {
+                    "light" => ""
+                    
+                }; *@
+
+
+
+                <div id="@device.DeviceId" class="device @(device.DeviceState ? "active" : null)">
+                    <div class="body">
+                        @* <i class="@icon"></i> *@
+                        <div class="title">@device.DeviceName</div>
+                        <div class="state">@(device.ConnectionsState ? "connected" : "Connecting...")</div>
+                    </div> 
+                    <footer>
+                        <label class="switch">
+                            <InputCheckbox @bind-Value="device.DeviceState" @onclick="() => " disabled="@(device.ConnectionsState == false)"/>
+                            <span class="slider round"></span>
+                        </label>
+                    </footer>
                 </div>
             }
         }
