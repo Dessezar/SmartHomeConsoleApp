@@ -22,8 +22,6 @@
                     
                 }; *@
 
-
-
                 <div id="@device.DeviceId" class="device @(device.DeviceState ? "active" : null)">
                     <div class="body">
                         @* <i class="@icon"></i> *@
@@ -32,7 +30,7 @@
                     </div> 
                     <footer>
                         <label class="switch">
-                            <InputCheckbox @bind-Value="device.DeviceState" @onclick="() => " disabled="@(device.ConnectionsState == false)"/>
+                            <InputCheckbox @bind-Value="device.DeviceState" @onclick="() => viewModel.OnDeviceStateChanged(device) " disabled="@(device.ConnectionsState == false)"/>
                             <span class="slider round"></span>
                         </label>
                     </footer>
@@ -53,4 +51,15 @@
 
 @code {
     private IEnumerable<DeviceSettings> Devices = [];
+    protected override async Task OnInitializedAsync()
+    {
+        Devices = await viewModel.GetDevicesAsync();
+        viewModel.Timer = new Timer(async _ => await SetDevicesAsync(), null, 0, viewModel.TimerInterval);
+        return base.OnInitializedAsync();
+    }
+    private async Task SetDeviceAsync()
+    {
+        Devices = await viewModel.GetDevicesAsync();
+        await InvokeAsync(StateHasChanged);
+    }
 }
