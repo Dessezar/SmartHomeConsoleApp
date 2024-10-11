@@ -3,9 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.11.35303.130
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Devices.ConsoleApp", "SmartHomeConsoleApp\Devices.ConsoleApp.csproj", "{6E5360AE-0D79-4111-883A-9426A40900C2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Devices.ConsoleApp", "SmartHomeConsoleApp\Devices.ConsoleApp.csproj", "{6E5360AE-0D79-4111-883A-9426A40900C2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shared", "Shared\Shared.csproj", "{ACE13A10-FE04-4744-9E04-AA3BB4AF7382}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shared", "Shared\Shared.csproj", "{ACE13A10-FE04-4744-9E04-AA3BB4AF7382}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MainApp", "MainApp\MainApp.csproj", "{D0BCA3E1-449D-45BE-AE06-1ABCEC0DBE05}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,12 @@ Global
 		{ACE13A10-FE04-4744-9E04-AA3BB4AF7382}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ACE13A10-FE04-4744-9E04-AA3BB4AF7382}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ACE13A10-FE04-4744-9E04-AA3BB4AF7382}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D0BCA3E1-449D-45BE-AE06-1ABCEC0DBE05}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D0BCA3E1-449D-45BE-AE06-1ABCEC0DBE05}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D0BCA3E1-449D-45BE-AE06-1ABCEC0DBE05}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{D0BCA3E1-449D-45BE-AE06-1ABCEC0DBE05}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D0BCA3E1-449D-45BE-AE06-1ABCEC0DBE05}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D0BCA3E1-449D-45BE-AE06-1ABCEC0DBE05}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
