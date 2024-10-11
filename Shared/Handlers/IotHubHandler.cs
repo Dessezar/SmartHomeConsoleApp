@@ -1,7 +1,10 @@
-﻿namespace Shared.Handlers;
+﻿
+using Microsoft.Azure.Devices;
 
-public class IotHubHandler
+namespace Shared.Handlers;
+
+public class IotHubHandler(string connectionString)
 {
-    private readonly RegistryManager
-
+    private readonly RegistryManager? _registry = RegistryManager.CreateFromConnectionString(connectionString);
+    private readonly ServiceClient? _serviceClient = ServiceClient.CreateFromConnectionString(connectionString);
 }

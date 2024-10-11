@@ -1,5 +1,6 @@
 ﻿using MainApp.ViewModels;
 using Microsoft.Extensions.Logging;
+using Shared.Handlers;
 
 namespace MainApp
 {
@@ -23,6 +24,7 @@ namespace MainApp
 #endif
 
             builder.Services.AddTransient<HomeViewModel> ();
+            builder.Services.AddTransient(new IotHubHandler(""));
 
             return builder.Build();
         }
