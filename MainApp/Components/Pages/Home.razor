@@ -1,4 +1,5 @@
 ﻿@page "/"
+@using Shared.Models
 
 
 
@@ -6,11 +7,27 @@
     <h3 class="headline">Devices</h3>
 
     <div class="devices">
+        @if (Devices != null)
+        {
+            foreach (var device in Devices)
+            {
+                <div id="@device.DeviceId" class="device @(device.DeviceState ? "active" : null)">
+
+                </div>
+            }
+        }
+        else
+        {
+            <div clsss="preloader">
+                <i class="fa-solid fa-spinner-third fa-spin"></i>
+            </div>
+        }
+
     </div>
 </div>
 
 
-@* 
+
 @code {
-    private IEnumerable<
-} *@
+    private IEnumerable<DeviceSettings> Devices = [];
+}
