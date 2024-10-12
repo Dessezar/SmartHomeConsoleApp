@@ -9,10 +9,10 @@ public class IotHubHandler
     private readonly RegistryManager? _registry;
     private readonly ServiceClient? _serviceClient;
 
-    public IotHubHandler(string connectionString)
+    public IotHubHandler()
     {
-        _registry = RegistryManager.CreateFromConnectionString(connectionString);
-        _serviceClient = ServiceClient.CreateFromConnectionString(connectionString);
+        _registry = RegistryManager.CreateFromConnectionString(_connectionString);
+        _serviceClient = ServiceClient.CreateFromConnectionString(_connectionString);
     }
 
     public async Task<IEnumerable<DeviceSettings>> GetDevicesAsync()
@@ -49,7 +49,7 @@ public class IotHubHandler
 
     public async Task SendDirectMethodAsync(string deviceId, string methodName)
     {
-        var methodInvocation = new CloudToDeviceMethod(methodName) { ResponseTimeout = TimeSpan.FromSeconds(10) };
+        var methodInvocation = new CloudToDeviceMethod(methodName) { ResponseTimeout = TimeSpan.FromSeconds(10)};
         var response = await _serviceClient!.InvokeDeviceMethodAsync(deviceId, methodInvocation);
     }
 }
