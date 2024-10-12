@@ -8,6 +8,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="communitytoolkit.maui" Version="9.1.0" />
+    <PackageReference Include="microsoft.azure.devices.client" Version="1.42.3" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Shared\Shared.csproj" />
   </ItemGroup>
 
