@@ -25,8 +25,8 @@ namespace MainApp
     		builder.Logging.AddDebug();
 #endif
 
-            builder.Services.AddTransient<HomeViewModel> ();
-            builder.Services.AddTransient<IotHubHandler> ();
+            builder.Services.AddTransient<HomeViewModel>();
+            builder.Services.AddTransient<IotHubHandler>();
 
             return builder.Build();
         }

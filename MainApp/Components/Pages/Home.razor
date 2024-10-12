@@ -3,8 +3,6 @@
 @using Shared.Models
 @inject HomeViewModel viewModel
 
-
-
 <div class="container">
 
     <h3 class="headline">Devices</h3>
@@ -15,22 +13,21 @@
             foreach (var device in Devices)
             {
 
-
-               @*  var icon = device.DeviceType.ToLower() switch
+                var icon = device?.DeviceType?.ToLower() switch
                 {
-                    "light" => ""
-                    
-                }; *@
+                    "light" => "fa-regular fa-lightbulb",
+                    _ => "fa-regular fa-microchip"
+                };
 
-                <div id="@device.DeviceId" class="device @(device.DeviceState ? "active" : null)">
+                <div id="@device!.DeviceId" class="device @(device.DeviceState ? "active" : null)">
                     <div class="body">
-                        @* <i class="@icon"></i> *@
+                        <i class="@icon"></i>
                         <div class="title">@device.DeviceName</div>
                         <div class="state">@(device.ConnectionsState ? "connected" : "Connecting...")</div>
-                    </div> 
+                    </div>
                     <footer>
                         <label class="switch">
-                            <InputCheckbox @bind-Value="device.DeviceState" @onclick="() => viewModel.OnDeviceStateChanged(device) " disabled="@(device.ConnectionsState == false)"/>
+                            <InputCheckbox @bind-Value="device.DeviceState" @onclick="() => viewModel.OnDeviceStateChanged(device) " disabled="@(device.ConnectionsState == false)" />
                             <span class="slider round"></span>
                         </label>
                     </footer>
