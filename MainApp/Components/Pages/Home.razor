@@ -54,8 +54,8 @@
     protected override async Task OnInitializedAsync()
     {
         Devices = await viewModel.GetDevicesAsync();
-        viewModel.Timer = new Timer(async _ => await SetDevicesAsync(), null, 0, viewModel.TimerInterval);
-        return base.OnInitializedAsync();
+        viewModel.Timer = new Timer(async _ => await SetDeviceAsync(), null, 0, viewModel.TimerInterval);
+        // return base.OnInitializedAsync();
     }
     private async Task SetDeviceAsync()
     {

@@ -16,7 +16,7 @@ public class HomeViewModel
 
     public async Task<IEnumerable<DeviceSettings>> GetDevicesAsync()
     {
-        return _iotHub.GetDevicesAsync();
+        return await _iotHub.GetDevicesAsync();
     }
 
     public async Task OnDeviceStateChanged(DeviceSettings device)
