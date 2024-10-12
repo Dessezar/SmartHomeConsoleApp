@@ -47,6 +47,7 @@ public class IotHubHandler
     }
 
 
+
     public async Task SendDirectMethodAsync(string deviceId, string methodName)
     {
         var methodInvocation = new CloudToDeviceMethod(methodName) { ResponseTimeout = TimeSpan.FromSeconds(10)};
