@@ -19,6 +19,7 @@ public class HomeViewModel
         return await _iotHub.GetDevicesAsync();
     }
 
+
     public async Task OnDeviceStateChanged(DeviceSettings device)
     {
         Timer?.Change(Timeout.Infinite, Timeout.Infinite);
